@@ -891,8 +891,12 @@ function getPathAndQueryString(url) {
   const path = getPath(url);
   const queryString = getQueryString(url);
   let value = '/';
-  if (path) value += path;
-  if (queryString) value += `?${queryString}`;
+  if (path) {
+    value += path;
+  }
+  if (queryString) {
+    value += `?${queryString}`;
+  }
   return value;
 }
 
@@ -1239,8 +1243,12 @@ function safeDecodeURI(uri) {
  * @return {string} Displayed URL.
  */
 function filterURLForDisplay(url, maxLength = null) {
+  if (!url) {
+    return '';
+  }
+
   // Remove protocol and www prefixes.
-  let filteredURL = url.replace(/^(?:https?:)\/\/(?:www\.)?/, '');
+  let filteredURL = url.replace(/^[a-z\-.\+]+[0-9]*:(\/\/)?/i, '').replace(/^www\./i, '');
 
   // Ends with / and only has that single slash, strip it.
   if (filteredURL.match(/^[^\/]+\/$/)) {
